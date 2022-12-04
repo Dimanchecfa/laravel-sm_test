@@ -84,7 +84,7 @@
                                 <label for="inputName">
                                     Ancien mot de passe
                                 </label>
-                                <input type="password" id="inputName" class="form-control" value={{ old('old_password') }}
+                                <input type="password" id="inputName" class="form-control" value="{{ old('old_password') }}"
                                     name="old_password" />
                                 @error('old_password')
                                     <span class="text-danger">{{ $message }}</span>
@@ -94,12 +94,10 @@
                                 <label for="inputClientCompany">
                                     Nouveau mot de passe
                                 </label>
-                                <input type="password "id="inputClientCompany" class="form-control"
-                                    value={{ 'password' }} name="password" />
+                                <input type="password" id="inputClientCompany" class="form-control"
+                                    value="{{ old('password') }}" name="password" />
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group">
@@ -107,11 +105,9 @@
                                     Confirmer le mot de passe
                                 </label>
                                 <input type="password" id="inputProjectLeader" class="form-control"
-                                    value={{ old('password_confirmation') }} name="password_confirmation" />
+                                    value="{{ old('password_confirmation') }}" name="password_confirmation" />
                                 @error('password_confirmation')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="form-group">

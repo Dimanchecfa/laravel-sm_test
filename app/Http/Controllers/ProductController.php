@@ -92,7 +92,7 @@ class ProductController extends Controller
     {
         try {
             $product->update($request->all());
-            $request->session()->flash('success', 'Produit modifié avec succès');
+            return redirect()->route('product.index')->with('success', 'Produit modifié avec succès');
             return redirect()->back();
         } catch (\Exception $e) {
             $request->session()->flash('error', $e->getMessage());

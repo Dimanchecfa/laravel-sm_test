@@ -28,8 +28,13 @@ if(!function_exists('getCategoryProductNumber')) {
 if(!function_exists('getCategoryProductPrice')) {
     function getCategoryProductPrice($category)
     {
-        $price = Product::where('category_id', $category)->sum('prix');
-        return $price;
+        $products = Product::where('category_id', $category)->get();
+        $total = 0;
+        foreach ($products as $product) {
+            $total += $product->prix;
+        }
+        return $total;
+
     }
 }
 

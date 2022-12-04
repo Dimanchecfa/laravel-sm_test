@@ -66,7 +66,9 @@ searchCategoryForm.addEventListener("submit", (e) => {
 
                                 </div>
                                 <div class="col-5 text-center">
-                                    <img src="assets/dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid">
+                                    <img src="${formatPath(
+                                        element.image
+                                    )}" alt="user-avatar" class="img-fluid" style="width: 250px; height: 170px; margin: 0 auto;" >
                                 </div>
                             </div>
                         </div>

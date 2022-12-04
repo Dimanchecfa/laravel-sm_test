@@ -122,9 +122,11 @@ searchCategoryProduct.addEventListener("submit", (e) => {
                 });
 
                 if (Object.entries(data)[0][1].length == 0) {
-                    products.innerHTML = `<div class="alert alert-danger" role="alert">
-                    Aucun résultat trouvé
-                  </div>`;
+                    categories.innerHTML = `<div class="alert alert-warning alert-dismissible px-4 col-md-10 offset-md-1">
+
+        <h5><i class="icon fas fa-ban"></i>  Aucune categorie ne correspond à votre recherche!</h5>
+
+    </div>`;
                 }
             });
         })

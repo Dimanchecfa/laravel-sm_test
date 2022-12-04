@@ -25,11 +25,14 @@ class UserController extends Controller
         try {
             $input = $request->all();
             getUserConnected()->update($input);
-            return redirect()->back()->with('success', 'Informations modifiées avec succès');
+            return redirect()
+                ->back()
+                ->with('success', 'Informations modifiées avec succès');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
         }
-
     }
     public function updatePassword(Request $request)
     {
@@ -45,27 +48,17 @@ class UserController extends Controller
                 $user->save();
                 return redirect()->back()->with('success', 'Mot de passe modifié avec succès');
             } else {
-                return redirect()->back()->with('error', 'Ancien mot de passe incorrect');
+               return redirect()->back()->with('error', 'Ancien mot de passe incorrect');
             }
-
-
-
-
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()
+                ->back()
+                ->with('error', $e->getMessage());
         }
-
     }
 
-    public function profile ()
+    public function profile()
     {
         return view('pages.admin.user.profile');
     }
-
-
-
-
-
-
-
 }

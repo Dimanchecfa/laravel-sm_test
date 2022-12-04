@@ -12,11 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth')->except(['index', 'show' , 'store']);
-    // }
-
 
 
 
@@ -61,7 +56,6 @@ class CategoryController extends Controller
             Category::create($inputs);
             return redirect()->route('category.index')->with('success', 'Catégorie ajoutée avec succès');
         } catch (\Exception $e) {
-            dd($e);
             $request->session()->flash('error', $e->getMessage());
             return redirect()->back();
         }

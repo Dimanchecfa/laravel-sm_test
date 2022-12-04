@@ -62,14 +62,14 @@
                                                     Prix total:
                                                 </b>
                                                 <span class="text-bold text-lg">
-                                                    {{ getCategoryProductPrice($category->id) }}
+                                                    {{ getCategoryProductPrice($category->id) }} F CFA
                                                 </span>
                                             </p>
 
                                         </div>
                                         <div class="col-5 text-center">
                                             <img src="{{ asset(getFilesPath($category->image)) }}" alt="user-avatar"
-                                                class="img-circle img-fluid" style="width : 200px; height: 200px">
+                                                class="img-fluid" style="width : 200px; height: 170px">
                                         </div>
                                     </div>
                                 </div>
