@@ -1,5 +1,6 @@
-@extends('layouts.admin')
+@extends('layouts.admin.admin')
 @section('page-header')
+
 @include('partials.page-header', [
 'head' => 'Ajout d un produit',
 'title' => 'Produits',
@@ -32,22 +33,43 @@
                     @enderror
                 </div>
                 <div class="form-group">
+                    <label for="exampleInputEmail1">
+                        Prix du produit
+                    </label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Entrer le prix du produit" name="prix" value="{{ old('prix') }}">
+                    @error('prix')
+                    <span style="margin-top: 10px;" class="text-danger">
+                        {{ $message }}
+                    </span>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label>
                         Description du produit
                     </label>
                     <textarea class="form-control" rows="4" placeholder="Entrer la decription ..." name="description" value="{{ old('description') }}"></textarea>
+                    @error('description')
+                    <span style="margin-top: 10px;" class="text-danger">
+                        {{ $message }}
+                    </span>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>
                         Selectionner une categorie
                     </label>
-                    <select class="form-control select2" style="width: 100%;">
+                    <select class="form-control select2" style="width: 100%;" name="category_id">
                         @foreach ($categorie as $category)
                         <option value="{{ $category->id }}">
                             {{ $category->type }}
                         </option>
                         @endforeach
                     </select>
+                    @error('categorie_id')
+                    <span class="text-danger">
+                        {{ $message }}
+                    </span>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="exampleInputFile">
@@ -64,6 +86,11 @@
                             <span class="input-group-text">Upload</span>
                         </div>
                     </div>
+                    @error('image')
+                    <span class="text-danger">
+                        {{ $message }}
+                    </span>
+                    @enderror
                 </div>
             </div>
             <!-- /.card-body -->

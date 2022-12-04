@@ -26,7 +26,12 @@ class FrontOfficeController extends Controller
     public function searchProduct(Request $request)
     {
         try {
-            $products = Product::where('nom', 'like', '%' . $request->search . '%')->get();
+            $search = explode(' ', $request->search);
+            $products = Product::where(function ($query) use ($search) {
+                foreach ($search as $value) {
+                    $query->orWhere('nom', 'like', '%' . $value . '%');
+                }
+            })->get();
             return response()->json([
                 'products' => $products
             ]);
@@ -49,7 +54,18 @@ class FrontOfficeController extends Controller
     public function searchCategory(Request $request)
     {
         try {
-            $categories = Category::where('type', 'like', '%' . $request->search . '%')->get();
+            $search_explode = explode(' ', $request->search);
+            $categories = Category::where(function ($query) use ($search_explode) {
+                foreach ($search_explode as $value) {
+                    $query->orWhere('type', 'like', '%' . $value . '%');
+                }
+            })->get();
+            return response()->json([
+                'categories' => $categories
+            ]);
+
+
+
             return response()->json([
                 'categories' => $categories
             ]);
@@ -83,7 +99,12 @@ class FrontOfficeController extends Controller
     public function searchProductByCategory(Request $request, $id)
     {
         try {
-            $products = Product::where('category_id', $id)->where('nom', 'like', '%' . $request->search . '%')->get();
+            $search = explode(' ', $request->search);
+            $products = Product::where('category_id', $id)->where( function ($query) use ($search) {
+                foreach ($search as $value) {
+                    $query->orWhere('nom', 'like', '%' . $value . '%');
+                }
+            })->get();
             return response()->json([
                 'products' => $products
             ]);

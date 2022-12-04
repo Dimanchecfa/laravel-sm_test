@@ -22,7 +22,6 @@
 
 <body class=" hold-transition layout-top-nav">
     <div class="wrapper">
-        <!-- Main Header -->
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
 
@@ -34,17 +33,26 @@
                 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="index3.html" class="nav-link text-lg {{ Request::is('/product') ? 'text-bold' : '' }}">
+                            <a href="{{ url('/product') }}" class="nav-link {{ Request::is('product*') ? 'active' : '' }}">
                                 Produits
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Contact</a>
+                            <a href="{{ url('/category') }}" class="nav-link {{ Request::is('category*') ? 'active' : '' }}">
+                                Categories
+                            </a>
                         </li>
                     </ul>
                 </div>
 
+
             </div>
+            <div class="col-md-1">
+                    <a href="{{ url('/login') }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-lock"></i>
+                        Se connecter
+                    </a>
+                </div>
         </nav>
 
         <!-- Content Wrapper. Contains page content -->

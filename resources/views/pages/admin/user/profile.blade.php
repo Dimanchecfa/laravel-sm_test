@@ -1,135 +1,134 @@
-@extends('layouts.admin')
+@extends('layouts.admin.admin')
 @section('page-header')
-
-
-@include('partials.page-header' ,[
-'head' => 'Profile',
-'title' => 'admin',
-'subtitle' => 'profile',
-'url' => 'admin/category',
-])
-
-
-
+    @include('partials.page-header', [
+        'head' => 'Profile',
+        'title' => 'admin',
+        'subtitle' => 'profile',
+        'url' => 'admin/category',
+    ])
 @endsection
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card card-primary card-outline">
-                <div class="card-body box-profile">
-                    <div class="text-center">
-                        <img class="profile-user-img img-fluid img-circle" src="{{asset('assets/dist/img/user4-128x128.jpg')}}" alt="User profile picture" />
-                    </div>
+    @include('partials.notifications')
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
 
-                    <h3 class="profile-username text-center">
-                        {{ Auth::user()->name }}
-                    </h3>
-
-
-                    <ul class="list-group list-group-unbordered mb-3">
-                        <li class="list-group-item">
-                            <b>
-                                Nom
-                            </b> <a class="float-right">
-                                DImanche
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>
-                                Prenom
-                            </b> <a class="float-right">
-                                DImanche
-                            </a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>
-                                Email
-                            </b> <a class="float-right">
-                                DImanche
-                            </a>
-                        </li>
-                    </ul>
-
-                    <a href="#" class="btn btn-primary btn-block"><b>
-                            Changer de photo de profile
-                        </b></a>
-                </div>
-                <!-- /.card-body -->
-            </div>
-
-        </div>
-        <!-- /.col -->
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header p-2 card-primary">
-                    <ul class="nav nav-pills">
-
-                        <li class="nav-item">
-                            <a class="nav-item active" href="#settings" data-toggle="tab">
-                                Modifier le profile
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div class="tab-content">
-
-
-                        <div class="active tab-pane" id="settings">
-                            <form class="form-horizontal">
-                                <div class="form-group row">
-                                    <label for="inputName" class="col-sm-2 col-form-label">
-                                        Nom
-                                    </label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputName" placeholder="Nom" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="inputName2" class="col-sm-2 col-form-label">
-                                        Prenom
-                                    </label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputName2" placeholder="Prenom" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputEmail" placeholder="Email" />
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="offset-sm-2 col-sm-10">
-                                        <div class="checkbox">
-                                            <label>
-
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="offset-sm-2 col-sm-10">
-                                        <button type="submit" class="btn btn-danger">
-                                            Submit
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                <form class="form" method="POST" action="{{ route('update.info') }}" enctype="multipart/form-data">
+                    @method('PUT')
+                    @csrf
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Modifier les informations de l'utilisateur
+                            </h3>
                         </div>
-                        <!-- /.tab-pane -->
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="inputName">
+                                    Nom
+                                </label>
+                                <input type="text" id="inputName" class="form-control"
+                                    value={{ getUserConnected()->nom }} name="nom">
+                                @error('nom')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="inputClientCompany">
+                                    Prenom
+                                </label>
+                                <input type="text" id="inputClientCompany" class="form-control"
+                                    value={{ getUserConnected()->prenom }} name="prenom" />
+                                @error('prenom')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="inputProjectLeader">
+                                    Email
+                                </label>
+                                <input type="email" id="inputProjectLeader" class="form-control"
+                                    value={{ getUserConnected()->email }} name="email" />
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">
+                                    Enregistrer
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.tab-content -->
-                </div>
-                <!-- /.card-body -->
+                </form>
+                <!-- /.card -->
             </div>
-            <!-- /.card -->
+            <div class="col-md-6">
+
+                <form class="form" method="POST" action="{{ route('update.password') }}" enctype="multipart/form-data">
+                    @method('PUT')
+                    @csrf
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Modifier du mot de passe
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="inputName">
+                                    Ancien mot de passe
+                                </label>
+                                <input type="password" id="inputName" class="form-control" value={{ old('old_password') }}
+                                    name="old_password" />
+                                @error('old_password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="inputClientCompany">
+                                    Nouveau mot de passe
+                                </label>
+                                <input type="password "id="inputClientCompany" class="form-control"
+                                    value={{ 'password' }} name="password" />
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="inputProjectLeader">
+                                    Confirmer le mot de passe
+                                </label>
+                                <input type="password" id="inputProjectLeader" class="form-control"
+                                    value={{ old('password_confirmation') }} name="password_confirmation" />
+                                @error('password_confirmation')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">
+                                    Enregistrer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
+
         <!-- /.col -->
     </div>
-    <!-- /.row -->
-</div>
 
+
+    <!-- /.row -->
+    </div>
 @endsection

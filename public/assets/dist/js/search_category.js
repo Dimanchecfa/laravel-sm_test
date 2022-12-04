@@ -20,7 +20,7 @@ searchCategoryForm.addEventListener("submit", (e) => {
             response.json().then((data) => {
                 const categories = document.getElementById("categories");
                 categories.innerHTML = "";
-
+                console.log(Object.entries(data)[0][1]);
                 Object.entries(data)[0][1].forEach((element) => {
                     categories.innerHTML += `<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                     <div class="card bg-light d-flex flex-fill">

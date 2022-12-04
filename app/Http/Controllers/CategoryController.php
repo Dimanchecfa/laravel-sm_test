@@ -51,12 +51,13 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
+        $inputs = $request->all();
         try {
-            dd($request->all());
-            Category::create($request->all());
-
-            $request->session()->flash('success', 'Categorie ajoutée avec succès');
-            dd('ok');
+            if ($request->hasFile('image')) {
+                $inputs['image'] = $request->file('image')->store('public/categories');
+            }
+            Category::create($inputs);
+            return redirect()->route('category.index')->with('success', 'Catégorie ajoutée avec succès');
         } catch (\Exception $e) {
             dd($e);
             $request->session()->flash('error', $e->getMessage());
@@ -75,7 +76,7 @@ class CategoryController extends Controller
     {
         try {
             $products = $category->products ?? [];
-            return view('pages.category.show', compact('products'));
+            return view('pages.admin.categories.show', compact('category', 'products'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -87,9 +88,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('pages.admin.categories.edit', compact('category'));
     }
 
     /**
@@ -102,9 +103,14 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         try {
-            $category->update($request->all());
+            $inputs = $request->all();
+            if($request->hasFile('image')) {
+                $inputs['image'] = $request->file('image')->store('public/categories');
+            }
+            $category->update($inputs);
+
             $request->session()->flash('success', 'Categorie modifiée avec succès');
-            return redirect()->intended('/categories');
+            return redirect()->intended('admin/category');
         } catch (\Exception $e) {
             $request->session()->flash('error', $e->getMessage());
             return redirect()->back();
@@ -120,6 +126,10 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
+            $products = $category->products;
+            foreach ($products as $product) {
+                $product->delete();
+            }
             $category->delete();
             return redirect()->back()->with('success', 'Categorie supprimée avec succès');
         } catch (\Exception $e) {

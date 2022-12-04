@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app.app')
 @section('page-header')
 @include('partials.page-header', [
 'head' => 'Listes des categories',
@@ -55,7 +55,7 @@
                                             Description:
                                         </b>
                                         <span class="text-bold text-lg">
-                                            {{ $category->description }}
+                                            {{ $category->image }}
                                         </span>
 
                                     </p>
@@ -70,7 +70,9 @@
 
                                 </div>
                                 <div class="col-5 text-center">
-                                    <img src="{{ asset('assets/dist/img/user1-128x128.jpg')}}" alt="user-avatar" class="img-circle img-fluid">
+                                    <img src="{{
+                                        asset(getFilesPath($category->image))
+                                    }}" alt="user-avatar" class="img-circle img-fluid">
                                 </div>
                             </div>
                         </div>

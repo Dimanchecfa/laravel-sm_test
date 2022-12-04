@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app.app')
 @section('page-header')
 @include('partials.page-header', [
 'head' => 'Listes des produits',
@@ -7,7 +7,6 @@
 'url' => 'products',
 ])
 @endsection
-
 @section('content')
 <div class="container-fluid">
     <h2 class="text-center display-4">
@@ -59,7 +58,6 @@
         'description' => $product->description,
         'image' => $product->image,
         ])
-
     </div>
 </div>
 @endsection

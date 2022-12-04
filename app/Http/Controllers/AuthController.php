@@ -22,7 +22,7 @@ class AuthController extends Controller
             return redirect()->intended('/admin/category');
         }
         else {
-            return view('pages.app.home');
+            return redirect()->intended('/product');
         }
     }
 }

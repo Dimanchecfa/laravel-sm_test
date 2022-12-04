@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.app.app')
 @section('page-header')
 @include('partials.page-header', [
-'head' => 'Listes des produits de la categorie',
+'head' => 'Listes des produits de la categorie'. ' ' .$products->first()->category->type,
 'title' => 'Categories',
 'subtitle' => 'Details',
 'url' => 'category',
@@ -10,10 +10,12 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-    <h2 class="text-center display-4">Search</h2>
+    <h2 class="text-center display-4">
+        Rechercher un produit
+    </h2>
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <form action="{{ route ('category.product.search' , $products[0]->category_id)}}" method="post" id="search_product">
+            <form action="{{ route ('search.product' , $products[0]->category_id)}}" method="post" id="search_product">
                 <div class="input-group">
                     <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here" id="query" name="search">
                     <div class="input-group-append">
@@ -30,14 +32,19 @@
     <div class="row" id="products">
         @foreach ($products as $product)
         <div class="card mr-5" style="width: 18rem;">
-            <img src="{{ asset('assets/dist/img/avatar.png')}}" class="card-img-top" alt="..." style="width: 150px; height: 150px; margin: 0 auto;">
+            <img src="{{ asset('storage/'.$product->image) }}"
+
+            class="card-img-top" alt="..." style="width: 150px; height: 150px; margin: 0 auto;">
             <div class="card-body">
                 <h5 class="card-title">
-                    {{ $product->nom }}
+                 Nom : <span class="text-lg text-bold">{{ $product->nom }}</span>
                 </h5>
-                <p class="card-text">
-                    {{ $product->description }}
-                </p>
+                <h5 class="card-text">
+                    Prix : <span class="text-lg text-bold">15000</span>
+                </h5>
+                <h5 class="card-text">
+                    Description : <span class="text-lg text-bold">{{ formatProductDescription($product->description) }}</span>
+                </h5>
                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg{{$product->id}}">
                     Voir plus
                 </a>

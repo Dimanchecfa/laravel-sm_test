@@ -18,8 +18,8 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $products = Product::with('category')->get();
-            return view('pages.products', compact('products'));
+            $products = Product::all()->load('category');
+            return view('pages.admin.products.index', compact('products'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -44,10 +44,13 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
+        $input = $request->all();
         try {
-            Product::create($request->all());
-            $request->session()->flash('success', 'Produit ajouté avec succès');
-            return redirect()->back();
+            if ($request->hasFile('image')) {
+                $input['image'] = $request->file('image')->store('public/products');
+            }
+            Product::create($input);
+            return redirect()->route('product.index')->with('success', 'Produit ajouté avec succès');
         } catch (\Exception $e) {
             $request->session()->flash('error', $e->getMessage());
             return redirect()->back();
@@ -62,7 +65,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('pages.product.show', compact('product'));
+        return view('pages.admin.products.show', compact('product'));
     }
 
     /**
@@ -71,10 +74,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+        return view('pages.admin.products.edit', compact('product', 'categories'));
     }
+
 
     /**
      * Update the specified resource in storage.
