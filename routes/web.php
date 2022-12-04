@@ -25,7 +25,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('/product', ProductController::class);
     Route::put('/info', [UserController::class, 'updateUserInfos'])->name('update.info');
     Route::put('update/password', [UserController::class, 'updatePassword'])->name('update.password');
-    Route::post('change/password', [UserController::class, 'changePassword'])->name('change.password');
+    Route::post('/category/add_product/{id}', [CategoryController::class, 'addProductInCategory'])->name('add.product');
+    Route::post('/category/update_product/{id}', [CategoryController::class, 'updateProductInCategory'])->name('update.product');
+
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 });
 Route::get('/category/product/{id}', [FrontOfficeController::class, 'getProductByCategory'])->name('category.product');

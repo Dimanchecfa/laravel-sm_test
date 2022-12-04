@@ -55,19 +55,13 @@ class FrontOfficeController extends Controller
     {
         try {
             $search_explode = explode(' ', $request->search);
-            $categories = Category::where(function ($query) use ($search_explode) {
+            $categories = Category::with('products')->where(function ($query) use ($search_explode) {
                 foreach ($search_explode as $value) {
                     $query->orWhere('type', 'like', '%' . $value . '%');
                 }
             })->get();
             return response()->json([
-                'categories' => $categories
-            ]);
-
-
-
-            return response()->json([
-                'categories' => $categories
+                'categories' => $categories,
             ]);
         }catch (\Exception $e) {
             return response()->json([

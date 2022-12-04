@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -137,11 +139,57 @@ class CategoryController extends Controller
         }
     }
 
-    public function searchCategory(Request $request)
+    public function addProductInCategory(Request $request,$id)
     {
+         $validate = Validator::make($request->all(), [
+            'nom' => 'required',
+            'description' => 'required',
+            'prix' => 'required',
+            'image' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+         ]);
+        if ($validate->fails()) {
+           $request->session()->flash('error', 'Veuillez remplir tous les champs');
+            return redirect()->back();
+        }
+
         try {
-            $categories = Category::where('type', 'like', '%' . $request->search . '%')->get();
-            return view('pages.categories', compact('categories'));
+            $inputs = $request->all();
+            $inputs['category_id'] = $id;
+            if ($request->hasFile('image')) {
+                $inputs['image'] = $request->file('image')->store('public/products');
+            }
+            Product::create($inputs);
+            return redirect()->back()->with('success', 'Produit ajouté avec succès');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function updateProductInCategory(Request $request, $id)
+    {
+
+        $validate = Validator::make($request->all(), [
+            'nom' => 'required',
+            'description' => 'required',
+            'prix' => 'required',
+              ]);
+        if ($validate->fails()) {
+           $request->session()->flash('error', 'Veuillez remplir tous les champs');
+            return redirect()->back();
+        }
+
+
+
+
+
+        try {
+            $inputs = $request->all();
+            $product = Product::find($id);
+            if ($request->hasFile('image')) {
+                $inputs['image'] = $request->file('image')->store('public/products');
+            }
+            $product->update($inputs);
+            return redirect()->back()->with('success', 'Produit modifié avec succès');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

@@ -59,3 +59,10 @@ if(!function_exists('getUserConnected')) {
         return auth()->user();
     }
 }
+
+if(!function_exists('formatProductName')) {
+    function formatProductName($name)
+    {
+        return strlen($name) > 20 ? substr($name, 0, 20) . '...' : $name;
+    }
+}

@@ -1,6 +1,14 @@
 const searchCategoryForm = document.getElementById("search_category");
 const key2 = document.querySelector('meta[name="csrf-token2"]').content;
 
+const priceTotal = (array = []) => {
+    let total = 0;
+    array.forEach((element) => {
+        total += element.prix;
+    });
+    return total;
+};
+
 searchCategoryForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const url = searchCategoryForm.getAttribute("action");
@@ -20,7 +28,7 @@ searchCategoryForm.addEventListener("submit", (e) => {
             response.json().then((data) => {
                 const categories = document.getElementById("categories");
                 categories.innerHTML = "";
-                console.log(Object.entries(data)[0][1]);
+
                 Object.entries(data)[0][1].forEach((element) => {
                     categories.innerHTML += `<div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                     <div class="card bg-light d-flex flex-fill">
@@ -38,22 +46,20 @@ searchCategoryForm.addEventListener("submit", (e) => {
                                         </span>
 
                                     </p>
-                                    <p class="lead"><b>
-                                            Description:
-                                        </b>
-                                        <span class="text-bold text-lg">
-                                            ${element.description}
-                                        </span>
 
-                                    </p>
                                     <p class="lead"><b>
                                             Nombre de produits:
                                         </b>
                                         <span class="text-bold text-lg">
-                                            ${
-                                                Object.entries(data)[0][1]
-                                                    ?.length
-                                            }
+                                            ${element.products.length}
+                                        </span>
+
+                                    </p>
+                                    <p class="lead"><b>
+                                            Prix total:
+                                        </b>
+                                        <span class="text-bold text-lg">
+                                            ${priceTotal(element.products)} FCFA
                                         </span>
 
                                     </p>
@@ -78,9 +84,11 @@ searchCategoryForm.addEventListener("submit", (e) => {
                 });
 
                 if (Object.entries(data)[0][1].length == 0) {
-                    categories.innerHTML = `<div class="alert alert-danger" role="alert">
-                    Aucun résultat trouvé
-                  </div>`;
+                    categories.innerHTML = `<div class="alert alert-warning alert-dismissible px-4 col-md-10 offset-md-1">
+
+        <h5><i class="icon fas fa-ban"></i>  Aucune categorie ne correspond à votre recherche!</h5>
+
+    </div>`;
                 }
             });
         })
