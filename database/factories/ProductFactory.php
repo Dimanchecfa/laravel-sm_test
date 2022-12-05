@@ -15,13 +15,19 @@ class ProductFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+
+
     public function definition()
     {
+         $sentence = $this->faker->randomElement(generateProductDescriptions());
+         $title = $this->faker->randomElement(generateProductNames());
+            $price = $this->faker->randomElement(generateProductPrices());
         return [
-            'nom' => $this->faker->word,
-            'description' => $this->faker->sentence,
-            'prix' => $this->faker->randomNumber(2),
-            'image' => $this->faker->imageUrl(),
+            'nom' => $title,
+            'description' => $sentence,
+            'prix' => $price,
+            'image' => $this->faker->imageUrl(200, 200 , 'food'),
             'category_id' => Category::all()->unique()->random()->id,
         ];
     }

@@ -14,6 +14,22 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Category::factory()->count(20)->create();
+        $categories = array(
+        [
+        'type' => 'Legumes',
+        'image' => 'images/legumes.jpg',
+        ],
+        [
+        'type' => 'Fruits',
+        'image' => 'images/fruits.jpg',
+        ],
+        [
+        'type' => 'tubercules',
+        'image' => 'images/tubercules.jpg',
+        ]
+    );
+        foreach ($categories as $category) {
+            \App\Models\Category::create($category);
+        }
     }
 }

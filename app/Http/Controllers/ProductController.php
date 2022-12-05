@@ -111,7 +111,7 @@ class ProductController extends Controller
         try {
             $product->delete();
             return redirect()->back()->with('success', 'Produit supprimé avec succès');
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
