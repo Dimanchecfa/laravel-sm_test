@@ -102,7 +102,7 @@
                                     </h3>
                                 </div>
                                 <div class="card-body">
-                                    <img src="{{ asset(getFilesPath($category->image)) }}" alt=""
+                                    <img src="{{ asset(getFilesPath($product->image)) }}" alt=""
                                         class="img-fluid" style="width : 200px; height: 200px" />
                                 </div>
                             </div>
