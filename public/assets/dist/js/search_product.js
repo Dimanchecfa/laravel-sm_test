@@ -64,10 +64,7 @@ searchCategoryProduct.addEventListener("submit", (e) => {
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <div class="text-center p-2">
-                                    <img class=" profile-user-img img-fluid"
-                                        src="
-                                        ${formatPath(element.image)}
-                                    "
+                                 <img src="${formatPath(element.image)}"
                                         alt="product picture" style=" width: 200px; height: 170px;" />
                                 </div>
 

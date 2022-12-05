@@ -71,7 +71,7 @@ searchForm.addEventListener("submit", (e) => {
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <div class="text-center p-2">
-                                    <img class=" profile-user-img img-fluid"
+                                    <img class="profile-user-img img-fluid"
                                         src="
                                         ${formatPath(element.image)}
                                     "

@@ -58,13 +58,6 @@
                                                 </span>
 
                                             </p>
-                                            <p class="lead"><b>
-                                                    Prix total:
-                                                </b>
-                                                <span class="text-bold text-lg">
-                                                    {{ getCategoryProductPrice($category->id) }} F CFA
-                                                </span>
-                                            </p>
 
                                         </div>
                                         <div class="col-5 text-center">

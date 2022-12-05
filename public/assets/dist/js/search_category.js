@@ -1,14 +1,6 @@
 const searchCategoryForm = document.getElementById("search_category");
 const key2 = document.querySelector('meta[name="csrf-token2"]').content;
 
-const priceTotal = (array = []) => {
-    let total = 0;
-    array.forEach((element) => {
-        total += element.prix;
-    });
-    return total;
-};
-
 searchCategoryForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const url = searchCategoryForm.getAttribute("action");
@@ -52,14 +44,6 @@ searchCategoryForm.addEventListener("submit", (e) => {
                                         </b>
                                         <span class="text-bold text-lg">
                                             ${element.products.length}
-                                        </span>
-
-                                    </p>
-                                    <p class="lead"><b>
-                                            Prix total:
-                                        </b>
-                                        <span class="text-bold text-lg">
-                                            ${priceTotal(element.products)} FCFA
                                         </span>
 
                                     </p>

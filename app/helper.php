@@ -31,7 +31,8 @@ if(!function_exists('getCategoryProductPrice')) {
         $products = Product::where('category_id', $category)->get();
         $total = 0;
         foreach ($products as $product) {
-            $total += $product->prix;
+          //convertir en entier
+            $total += (int) $product->prix;
         }
         return $total;
 
